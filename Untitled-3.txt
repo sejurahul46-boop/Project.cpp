@@ -1,0 +1,67 @@
+#include<iostream>
+using namespace std;
+
+const int MAX_MONTHS = 100;
+
+float getvalidAmount(const string& message){
+    float value;
+    do{
+        cout << message;
+        cin >> value;
+        if(value < 0)
+            cout << "Value cann't be negative Try again.\n";
+    }while(value < 0);
+    return value;
+}
+
+int main(){
+    int months;
+    float annualtaxRate,monthlytaxRate;
+    float balance;
+
+    float deposits[MAX_MONTHS];
+    float withdrawals[MAX_MONTHS];
+    float taxes[MAX_MONTHS];
+
+    float totalDeposit = 0;
+    float totalwithdrawal = 0;
+    float totalTax = 0;
+
+     cout <<"Enter initial account balance:";
+    cin >> balance;
+
+    cout <<"Enter annual tax deduction rate (%):";
+    cin >> annualtaxRate;
+
+    cout <<"Enter total number of months:";
+    cin >> months;
+
+    if(months <= 0|| months > MAX_MONTHS){
+        cout << "Invalid number of months.\n";
+        return 0;
+    }
+    monthlytaxRate =(annualtaxRate/100)/12;
+
+    for(int i = 0; i < months; i++){
+        cout << "\n  Month " << i + 1 << " \n";
+
+        deposits[i] = getvalidAmount("Enter Deposit amount:");
+        balance += deposits[i];
+        totalDeposit += deposits[i];
+
+        withdrawals[i] = getvalidAmount("Enter withdrawal amount:");
+        balance -= withdrawals[i];
+        totalwithdrawal += withdrawals[i];
+
+        taxes[i] = balance*monthlytaxRate;
+        balance -= taxes[i];
+        totalTax += taxes[i];
+    }
+    cout <<"\n ACCOUNT SUMMARY \n";
+    cout <<"Final Balance: " << balance <<endl;
+    cout <<"Total Deposited: " << totalDeposit << endl;
+    cout <<"Total Withdrawn: " <<totalwithdrawal <<endl;
+    cout <<"Total Tax Deducted: " << totalTax << endl;
+
+   
+}
